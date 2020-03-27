@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+public class PickPeaks
+{
+    public static Dictionary<string, List<int>> GetPeaks(int[] arr)
+    {
+        Dictionary<string, List<int>> result = new Dictionary<string, List<int>>();
+        List<int> positions = new List<int>();
+        List<int> peaks = new List<int>();
+        Console.Write(Environment.NewLine + "Starting array: ");
+        foreach(int a in arr){
+          Console.Write(a + " ");
+        }
+        //finds peaks
+        for(int i = 1; i < arr.Length - 1; i++){
+          if((arr[i] > arr[i-1]) && (arr[i] > arr[i+1])){
+            positions.Add(i);
+            peaks.Add(arr[i]);
+            Console.Write(Environment.NewLine + "peak: " + arr[i] + " pos: " + i);
+            
+          //deals wih plateu
+          }else if((arr[i] > arr[i-1]) && (arr[i] == arr[i + 1])){
+            for(int j = i+1; j < arr.Length; j++){
+              if(arr[i] > arr[j]){
+                positions.Add(i);
+                peaks.Add(arr[i]);
+                Console.Write(Environment.NewLine + "peak: " + arr[i] + " pos: " + i);
+              }if(arr[i] != arr[j]){ break; };
+            }
+          }
+        }
+        //adds arrays to the Dictionary
+        result.Add("pos", positions);
+        result.Add("peaks", peaks);
+        
+        //Prints keys and values for debugging
+        foreach(string key in result.Keys) {
+          foreach(int item in result[key]) {
+            Console.Write(Environment.NewLine + "{0}, ", item);
+          }
+          Console.WriteLine();
+        }
+        
+        return result;
+    }
+}
